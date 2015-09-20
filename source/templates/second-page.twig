@@ -1,0 +1,16 @@
+{% extends "partials/layout.twig" %}
+
+{% block title %}Second page{% endblock %}
+
+{% block jumbotron %}
+	<h1>Second page <span class="icon-align-center"></span></h1>
+	<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+	<p><a class="btn btn-primary btn-lg" href="index.html" role="button">Go to home page &raquo;</a></p>
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		{% include "partials/simple-text-column.twig" %}
+		{% include "partials/simple-text-column.twig" %}
+	</div>
+{% endblock %}
