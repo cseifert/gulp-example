@@ -8,12 +8,13 @@
   },
   "author": "Christian Seifert",
   "license": "BSD-2-Clause",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "gulp": "~3.9.0",
     "gulp-sass": "~2.0.4",
     "gulp-uglify": "~1.4.0",
-	"gulp-minify-css": "~1.2.1",
-	"gulp-jquery": "~1.0.2",
+    "gulp-minify-css": "~1.2.1",
+    "gulp-jquery": "~1.0.2",
     "del": "~2.0.2",
     "run-sequence": "~1.1.2",
     "gulp-imagemin": "~2.3.0",
@@ -28,9 +29,9 @@
     "gulp-bower": "0.0.10",
     "gulp-compass": "~2.1.0",
     "gulp-local-screenshots": "~2.1.0",
-    "phantomjs": "~1.9.18"
-  },
-  "dependencies": {
-    "gulp-twig": "~0.4.0"
+    "phantomjs": "~1.9.18",
+    "gulp-twig": "~0.4.0",
+    "gulp.spritesmith": "~4.1.0",
+    "merge-stream": "~1.0.0"
   }
 }

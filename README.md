@@ -1,5 +1,5 @@
 # gulp-example
-This repository is a simple Gulp example integrating Bower, jQuery Custom, Twitter Bootstrap 3, Magnific Popup, Compass, Font Awesome, Font Custom and Twig.
+This repository is a simple Gulp example integrating Bower, jQuery Custom, Twitter Bootstrap 3, Magnific Popup, Font Awesome, Font Custom, Sprites and Twig.
 
 ## Installation
 At first, clone this repository to the location of your choice. Then install required dependencies by:

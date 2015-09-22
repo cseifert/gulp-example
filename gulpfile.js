@@ -12,9 +12,11 @@ var gulp = require('gulp'),
 	fontcustom = require('gulp-fontcustom'),
 	runSequence = require('run-sequence'),
 	jquery = require('gulp-jquery'),
-	compass = require('gulp-compass'),
 	localScreenshots = require('gulp-local-screenshots'),
-	twig = require('gulp-twig');
+	twig = require('gulp-twig'),
+	csso = require('gulp-csso'),
+	spritesmith = require('gulp.spritesmith'),
+	merge = require('merge-stream');
 
 gulp.task('clean', function(callback) {
 	del('../dist');
@@ -31,11 +33,8 @@ gulp.task('compile-sass', function() {
   return gulp.src('source/scss/**/*.scss')
 	.pipe(plumber())
 	.pipe(sourcemaps.init())
-	.pipe(compass({
-		css: './source/compass/stylesheets',
-		sass: './source/scss',
-		image: './source/compass/images'
-    }))
+	.pipe(sass())
+	.pipe(csso())
 	.pipe(gulp.dest('../dist/css'))
 	.pipe(minifyCss())
 	.pipe(rename({suffix:'.min'}))
@@ -89,6 +88,27 @@ gulp.task('compile-iconfont', function(){
 	.pipe(gulp.dest('../dist/iconfont'))
 });
 
+gulp.task('compile-sprites', function () {
+	var spriteData = gulp.src('source/images/sprites/*.png')
+		.pipe(spritesmith({
+			retinaSrcFilter: 'source/images/sprites/*-2x.png',
+			imgName: 'sprites.png',
+			retinaImgName: 'sprites-2x.png',
+			cssName: '_sprites.scss',
+			imgPath: '../images/sprites/sprites.png',
+			retinaImgPath: '../images/sprites/sprites-2x.png'
+		}));
+
+	var imgStream = spriteData.img
+		.pipe(imagemin())
+		.pipe(gulp.dest('../dist/images/sprites'));
+
+	var cssStream = spriteData.css
+		.pipe(gulp.dest('source/scss'));
+
+	return merge(imgStream, cssStream);
+});
+
 gulp.task('optimize-images', function(){
 	return gulp.src('source/images/**/*.+(png|jpg|jpeg|gif|svg)')
 	.pipe(cache(imagemin()))
@@ -96,7 +116,7 @@ gulp.task('optimize-images', function(){
 });
 
 gulp.task('default', function(callback){
-	runSequence('clean', ['select-icons', 'compile-iconfont', 'optimize-images', 'compile-sass', 'compile-jquery', 'compile-js', 'html', 'screens'], callback)
+	runSequence('clean', ['select-icons', 'compile-iconfont', 'compile-sprites', 'optimize-images', 'compile-sass', 'compile-jquery', 'compile-js', 'html', 'screens'], callback)
 });
 
 gulp.task('screens', function () {

@@ -1,4 +1,8 @@
-@import 'compass/reset';
+@import '../../bower_components/reset-css/_reset';
 @import '../iconfont/myfont';
-@import '../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
-@import '../../bower_components/magnific-popup/src/css/main.scss';
+@import '_sprites';
+@import '../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap';
+@import '../../bower_components/magnific-popup/src/css/main';
+
+@include retina-sprites($retina-groups);
+.sprite-example {@extend .sprite-adjust;display:block;}
