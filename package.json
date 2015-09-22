@@ -27,7 +27,6 @@
     "gulp-batch": "~1.0.5",
     "gulp-concat": "~2.6.0",
     "gulp-bower": "0.0.10",
-    "gulp-compass": "~2.1.0",
     "gulp-local-screenshots": "~2.1.0",
     "phantomjs": "~1.9.18",
     "gulp-twig": "~0.4.0",
