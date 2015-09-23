@@ -6,7 +6,7 @@ At first, clone this repository to the location of your choice. Then install req
 ```sh
 sudo apt-get install nodejs npm librsvg2-bin phantomjs build-essential ruby1.9.1-dev
 sudo ln -s /usr/bin/nodejs /usr/bin/node
-gem install compass
+gem install scss_lint
 ```
 
 Then, install all Bower and NPM dependencies by moving to the cloned folder and run the install routines:
