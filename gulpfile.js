@@ -127,7 +127,7 @@ gulp.task('optimize-images', function(){
 });
 
 gulp.task('default', function(callback){
-	runSequence('clean', ['select-icons', 'compile-iconfont', 'compile-sprites', 'optimize-images', 'compile-sass', 'compile-jquery', 'compile-js', 'html', 'screens'], callback)
+	runSequence('clean', 'select-icons', 'compile-iconfont', 'compile-sprites', 'optimize-images', 'compile-sass', 'compile-jquery', 'compile-js', 'html', 'screens', callback)
 });
 
 gulp.task('screens', function () {
