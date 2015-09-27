@@ -41,10 +41,6 @@ gulp.task('html', function() {
 
 gulp.task('compile-sass', function() {
 	return gulp.src('source/scss/**/*.scss')
-		/*.pipe(scsslint({
-			bundleExec: false
-		}))
-		*/
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass())
@@ -74,8 +70,6 @@ gulp.task('compile-js', function(){
 			'source/js/app.js'
 		])
 		.pipe(plumber())
-		.pipe(jshint())
-		.pipe(jshint.reporter(stylish))
 		.pipe(sourcemaps.init())
 		.pipe(concat('active-content.js'))
 		.pipe(gulp.dest('../dist/js'))
@@ -143,6 +137,17 @@ gulp.task('screens', function () {
 			width: ['1600', '1000', '480', '320'],
 			folder: '../dist/screens'
 		}));
+});
+
+gulp.task('lint', function() {
+	gulp.src('source/scss/**/*.scss')
+		.pipe(scsslint({
+			bundleExec: false
+		}));
+
+	gulp.src('source/js/*.js')
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish));
 });
 
 gulp.task('watch', function(){

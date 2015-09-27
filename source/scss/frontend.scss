@@ -1,7 +1,7 @@
-@import '../../bower_components/reset-css/_reset';
+@import '../../bower_components/reset-css/reset';
 @import '../iconfont/myfont';
-@import '_sprites';
-@import '../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap';
+@import 'sprites';
+@import '../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
 @import '../../bower_components/magnific-popup/src/css/main';
 
 @include retina-sprites($retina-groups);
