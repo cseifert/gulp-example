@@ -1,9 +1,9 @@
-$(document).ready(function() {
-	$('.image-popup').magnificPopup({
-		type: 'image',
+$( document ).ready( function() {
+	$( ".image-popup" ).magnificPopup( {
+		type: "image",
 		closeOnContentClick: true,
 		image: {
 			verticalFit: true
 		}
-	});
-});
+	} );
+} );
