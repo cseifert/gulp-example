@@ -1,6 +1,5 @@
 node_modules
 bower_components
-source/iconfont/*
 source/scss/.sass-cache
 source/js/vendor/*
 dist

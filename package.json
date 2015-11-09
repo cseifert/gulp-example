@@ -37,7 +37,6 @@
     "gulp-jshint": "~1.11.2",
     "gulp-autoprefixer": "~3.0.2",
     "gulp-html5-lint": "~1.0.1",
-    "gulp-csso": "~1.0.0",
     "es6-promise": "~3.0.2",
     "gulp-sassbeautify": "~0.1.0",
     "gulp-js-prettify": "~0.1.0",

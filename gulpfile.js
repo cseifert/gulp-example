@@ -16,7 +16,6 @@ var gulp = require('gulp'),
 	jquery = require('gulp-jquery'),
 	localScreenshots = require('gulp-local-screenshots'),
 	twig = require('gulp-twig'),
-	csso = require('gulp-csso'),
 	spritesmith = require('gulp.spritesmith'),
 	merge = require('merge-stream'),
 	autoprefixer = require('gulp-autoprefixer'),
@@ -52,7 +51,6 @@ gulp.task('compile-sass', function() {
 		.pipe(sourcemaps.init())
 		.pipe(sass())
 		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-		.pipe(csso())
 		.pipe(gulp.dest('../dist/css'))
 		.pipe(minifyCss())
 		.pipe(rename({suffix:'.min'}))
@@ -76,7 +74,7 @@ gulp.task('compile-jquery', function() {
 });
 
 gulp.task('compile-js', function(){
-	gulp.src('source/js/*.js')
+	gulp.src(['source/js/**/*.js', '!source/js/vendor/*.js'])
 		.pipe(jshint('.jshintrc'))
 		.pipe(jshint.reporter(stylish))
 		.pipe(jscs())
@@ -100,9 +98,9 @@ gulp.task('compile-js', function(){
 });
 
 gulp.task('beautify-js', function() {
-	gulp.src('source/js/*.js')
-		.pipe(jscs({fix:true}))
+	gulp.src(['source/js/**/*.js', '!source/js/vendor/*.js'])
 		.pipe(jsBeautify({collapseWhitespace: true}))
+		.pipe(jscs({fix:true}))
 		.pipe(gulp.dest('source/js'));
 });
 
@@ -162,7 +160,7 @@ gulp.task('screens', function () {
 });
 
 gulp.task('default', function(callback){
-	runSequence('clean', 'select-icons', 'compile-iconfont', 'compile-sprites', 'optimize-images', 'compile-sass', 'compile-jquery', 'compile-js', 'html', 'screens', callback)
+	runSequence('clean', 'compile-iconfont', 'compile-sprites', 'optimize-images', 'compile-sass', 'compile-jquery', 'compile-js', 'html', 'screens', callback)
 });
 
 gulp.task('watch', function(){
