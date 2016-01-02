@@ -2,7 +2,7 @@ require('es6-promise').polyfill();
 
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
-	minifyCss = require('gulp-minify-css'),
+	nano = require('gulp-cssnano'),
 	sourcemaps = require('gulp-sourcemaps'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
@@ -25,7 +25,10 @@ var gulp = require('gulp'),
 	stylish = require('jshint-stylish'),
 	html5Lint = require('gulp-html5-lint'),
 	sassBeautify = require('gulp-sassbeautify'),
-	jsBeautify = require('gulp-js-prettify');
+	jsBeautify = require('gulp-js-prettify'),
+	otf2ttf = require('otf2ttf'),
+	ttf2woff = require('gulp-ttf2woff'),
+	ttf2eot = require('gulp-ttf2eot');
 
 gulp.task('clean', function(callback) {
 	del('../dist');
@@ -52,7 +55,7 @@ gulp.task('compile-sass', function() {
 		.pipe(sass())
 		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
 		.pipe(gulp.dest('../dist/css'))
-		.pipe(minifyCss())
+		.pipe(nano())
 		.pipe(rename({suffix:'.min'}))
 		.pipe(sourcemaps.write('sourcemaps'))
 		.pipe(plumber.stop())
@@ -102,6 +105,26 @@ gulp.task('beautify-js', function() {
 		.pipe(jsBeautify({collapseWhitespace: true}))
 		.pipe(jscs({fix:true}))
 		.pipe(gulp.dest('source/js'));
+});
+
+gulp.task('otf2ttf', function () {
+	return gulp.src('source/fonts/**/*.otf')
+		.pipe(otf2ttf())
+		.pipe(gulp.dest(function(file) {
+			return 'source/fonts/' + file.data.fontName
+		}));
+});
+
+gulp.task('ttf2eot', function() {
+	return gulp.src('source/fonts/**/*.ttf')
+		.pipe(ttf2eot())
+		.pipe(gulp.dest('source/fonts/'));
+});
+
+gulp.task('ttf2woff', function() {
+	return gulp.src('source/fonts/**/*.ttf')
+		.pipe(ttf2woff())
+		.pipe(gulp.dest('source/fonts/'));
 });
 
 gulp.task('select-icons', function() {
