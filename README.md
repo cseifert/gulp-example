@@ -4,9 +4,9 @@ This repository is a simple Gulp example integrating Bower, jQuery Custom, Twitt
 ## Installation
 At first, clone this repository to the location of your choice. Then install required dependencies by:
 ```sh
-sudo apt-get install nodejs npm librsvg2-bin phantomjs build-essential ruby1.9.1-dev fontforge
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-npm install gulp bower -g
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+sudo apt-get install nodejs librsvg2-bin phantomjs build-essential ruby1.9.1-dev fontforge
+sudo npm install gulp bower ttf2eot ttf2woff otf2ttf -g
 wget http://people.mozilla.com/~jkew/woff/woff-code-latest.zip
 unzip woff-code-latest.zip -d sfnt2woff && cd sfnt2woff && make && sudo mv sfnt2woff /usr/local/bin/
 gem install fontcustom
@@ -20,7 +20,7 @@ sudo npm install
 bower install
 ```
 
-Now you can make a build by the following command (See gulp.js for included tasks):
+Now you can make a frontend build by the following command (See gulp.js for included tasks):
 ```sh
 gulp
 ```
