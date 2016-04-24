@@ -1,13 +1,5 @@
-@import "../../bower_components/reset-css/_reset";
-@import "../iconfont/myfont";
-@import "sprites";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../bower_components/magnific-popup/src/css/main";
-
-@include retina-sprites($retina-groups);
-
-.sprite-example {
-  @extend .sprite-adjust;
-
-  display: block;
-}
+@import "reset";
+@import "base/variables";
+@import "vendor/*";
+@import "base/*";
+@import "components/*";

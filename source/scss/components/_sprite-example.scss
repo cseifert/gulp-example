@@ -1,0 +1,7 @@
+@include retina-sprites($retina-groups);
+
+.sprite-example {
+  @extend .sprite-adjust;
+
+  display: block;
+}

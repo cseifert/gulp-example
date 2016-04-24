@@ -1,0 +1,55 @@
+//
+// Icon Font: webfont
+//
+
+@font-face {
+  font-family: "webfont";
+  src: url("../iconfont/webfont.eot");
+  src: url("../iconfont/webfont.eot?#iefix") format("embedded-opentype"),
+       url("../iconfont/webfont.woff") format("woff"),
+       url("../iconfont/webfont.ttf") format("truetype"),
+       url("../iconfont/webfont.svg#webfont") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "webfont";
+    src: url("../iconfont/webfont.svg#webfont") format("svg");
+  }
+}
+
+[data-icon]:before { content: attr(data-icon); }
+
+[data-icon]:before,
+.icon-500px:before,
+.icon-adjust:before,
+.icon-adn:before,
+.icon-align-center:before,
+.icon-align-justify:before {
+  display: inline-block;
+  font-family: "webfont";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.icon-500px:before { content: "\f100"; }
+.icon-adjust:before { content: "\f101"; }
+.icon-adn:before { content: "\f102"; }
+.icon-align-center:before { content: "\f103"; }
+.icon-align-justify:before { content: "\f104"; }
+
+$font-webfont-500px: "\f100";
+$font-webfont-adjust: "\f101";
+$font-webfont-adn: "\f102";
+$font-webfont-align-center: "\f103";
+$font-webfont-align-justify: "\f104";

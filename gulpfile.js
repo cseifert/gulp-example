@@ -2,7 +2,9 @@ require('es6-promise').polyfill();
 
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
+	sassGlobbing = require('gulp-css-globbing'),
 	nano = require('gulp-cssnano'),
+	buffer = require('vinyl-buffer'),
 	sourcemaps = require('gulp-sourcemaps'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
@@ -28,7 +30,8 @@ var gulp = require('gulp'),
 	jsBeautify = require('gulp-js-prettify'),
 	otf2ttf = require('otf2ttf'),
 	ttf2woff = require('gulp-ttf2woff'),
-	ttf2eot = require('gulp-ttf2eot');
+	ttf2eot = require('gulp-ttf2eot'),
+	fontAwesomeGenerator = require('font-awesome-svg-png/lib/generate');
 
 gulp.task('clean', function(callback) {
 	del('../dist');
@@ -45,14 +48,22 @@ gulp.task('html', function() {
 });
 
 gulp.task('compile-sass', function() {
-	return gulp.src(['source/scss/*.scss', '!source/scss/_sprites.scss'])
+	return gulp.src(['source/scss/**/*.scss', '!source/scss/vendor/**/*.scss'])
 		.pipe(plumber())
 		.pipe(scsslint({
 			bundleExec: false,
 			config: 'scss-lint.yml'
 		}))
 		.pipe(sourcemaps.init())
-		.pipe(sass())
+		.pipe(sassGlobbing({
+			extensions: ['.scss']
+	    }))
+		.pipe(sass({
+			includePaths: [
+               require('node-reset-scss').includePath,
+               'node_modules/bootstrap-sass/assets/stylesheets/'
+            ]
+	    }))
 		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
 		.pipe(gulp.dest('../dist/css'))
 		.pipe(nano())
@@ -77,17 +88,17 @@ gulp.task('compile-jquery', function() {
 });
 
 gulp.task('compile-js', function(){
-	gulp.src(['source/js/**/*.js', '!source/js/vendor/*.js'])
+	gulp.src(['source/js/**/*.js', '!source/js/vendor/**/*.js'])
 		.pipe(jshint('.jshintrc'))
 		.pipe(jshint.reporter(stylish))
 		.pipe(jscs())
 		.pipe(jscs.reporter());
 
 	return gulp.src([
-			'source/js/vendor/jquery.custom.js',
-			'bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-			'bower_components/magnific-popup/dist/jquery.magnific-popup.min.js',
-			'source/js/app.js'
+			"source/js/vendor/*.js",
+			"node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
+			"node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
+			"source/js/*.js"
 		])
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
@@ -127,16 +138,21 @@ gulp.task('ttf2woff', function() {
 		.pipe(gulp.dest('source/fonts/'));
 });
 
-gulp.task('select-icons', function() {
-	return gulp.src('bower_components/Font-Awesome-SVG-PNG/white/svg/*.svg')
-		.pipe(gulp.dest('source/iconfont/icons'));
+gulp.task('extract-icons', function() {
+	return fontAwesomeGenerator({
+		'dest': 'source/iconfont/font-awesome/',
+		'color': 'black',
+		'size': '64',
+		'svg': true,
+		'png': false
+	});
 });
 
 gulp.task('compile-iconfont', function(){
 	return gulp.src('source/iconfont/icons/*.svg')
 		.pipe(plumber())
 		.pipe(fontcustom({
-			font_name: 'myfont',
+			font_name: 'webfont',
 			'css-selector': '.icon-{{glyph}}',
 			'preprocessor-path': '../iconfont/',
 			templates: 'scss'
@@ -144,6 +160,10 @@ gulp.task('compile-iconfont', function(){
 		.pipe(plumber.stop())
 		.pipe(gulp.dest('source/iconfont'))
 		.pipe(gulp.dest('../dist/iconfont'))
+		.on('end', function() {
+			return gulp.src('source/iconfont/*.scss')
+				.pipe(gulp.dest('source/scss/vendor'))
+		});
 });
 
 gulp.task('compile-sprites', function () {
@@ -158,11 +178,12 @@ gulp.task('compile-sprites', function () {
 		}));
 
 	var imgStream = spriteData.img
+		.pipe(buffer())
 		.pipe(imagemin())
 		.pipe(gulp.dest('../dist/images/sprites'));
 
 	var cssStream = spriteData.css
-		.pipe(gulp.dest('source/scss'));
+		.pipe(gulp.dest('source/scss/vendor'));
 
 	return merge(imgStream, cssStream);
 });
