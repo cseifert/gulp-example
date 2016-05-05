@@ -1,5 +1,3 @@
-require('es6-promise').polyfill();
-
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	sassGlobbing = require('gulp-css-globbing'),
@@ -41,7 +39,14 @@ gulp.task('clean', function(callback) {
 gulp.task('html', function() {
 	return gulp.src('source/templates/*.twig')
 		.pipe(plumber())
-		.pipe(twig())
+		.pipe(twig({
+			data: {
+				navItems: [
+					{'url': 'index.html', 'title':'Home'},
+					{'url': 'second-page.html', 'title':'Second page'}
+				]
+			}
+		}))
 		.pipe(html5Lint())
 		.pipe(plumber.stop())
 		.pipe(gulp.dest('../dist'));

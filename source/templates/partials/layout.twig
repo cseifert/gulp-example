@@ -23,8 +23,9 @@
 			</div>
 			<div id="navbar" class="navbar-collapse navbar-right collapse">
 			  <ul class="nav navbar-nav">
-				<li><a href="index.html">Homepage</a></li>
-				<li><a href="second-page.html">Second page</a></li>
+			    {% for entry in navItems %}
+					<li><a href="{{entry.url}}">{{entry.title}}</a></li>
+				{% endfor %}
 			  </ul>
 			</div>
 		  </div>
